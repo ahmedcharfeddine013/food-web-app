@@ -2,17 +2,17 @@ import express from "express";
 import { jwtCheck, jwtParse } from "../middleware/auth";
 import { OrderController } from "../controllers/order-controllers";
 
-const router = express.Router();
+const OrderRouter = express.Router();
 
-router.get("/", jwtCheck, jwtParse, OrderController.getMyOrders);
+OrderRouter.get("/", jwtCheck, jwtParse, OrderController.getMyOrders);
 
-router.post(
+OrderRouter.post(
   "/checkout/create-checkout-session",
   jwtCheck,
   jwtParse,
   OrderController.createCheckoutSession
 );
 
-router.post("/checkout/webhook", OrderController.stripeWebhookHandler);
+OrderRouter.post("/checkout/webhook", OrderController.stripeWebhookHandler);
 
-export default router;
+export default OrderRouter;

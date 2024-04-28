@@ -3,12 +3,12 @@ import { jwtCheck, jwtParse } from "../middleware/auth";
 import { MyUserController } from "../controllers/user-controllers";
 import { validateMyUserRequest } from "../middleware/validate";
 
-const router = express.Router();
+const UserRouter = express.Router();
 
 // /api/my/user
-router.get("/", jwtCheck, jwtParse, MyUserController.getCurrentUser);
-router.post("/", jwtCheck, MyUserController.createCurrentUser);
-router.put(
+UserRouter.get("/", jwtCheck, jwtParse, MyUserController.getCurrentUser);
+UserRouter.post("/", jwtCheck, MyUserController.createCurrentUser);
+UserRouter.put(
   "/",
   jwtCheck,
   jwtParse,
@@ -16,4 +16,4 @@ router.put(
   MyUserController.updateCurrentUser
 );
 
-export default router;
+export default UserRouter;

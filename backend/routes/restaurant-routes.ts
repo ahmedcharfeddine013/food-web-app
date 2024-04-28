@@ -2,9 +2,9 @@ import express from "express";
 import { param } from "express-validator";
 import { RestaurantController } from "../controllers/restaurant-controllers";
 
-const router = express.Router();
+const RestaurantRouter = express.Router();
 
-router.get(
+RestaurantRouter.get(
   "/:restaurantId",
   param("restaurantId")
     .isString()
@@ -14,7 +14,7 @@ router.get(
   RestaurantController.getRestaurant
 );
 
-router.get(
+RestaurantRouter.get(
   "/search/:city",
   param("city")
     .isString()
@@ -24,4 +24,4 @@ router.get(
   RestaurantController.searchRestaurant
 );
 
-export default router;
+export default RestaurantRouter;

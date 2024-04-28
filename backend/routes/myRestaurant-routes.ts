@@ -5,7 +5,7 @@ import { validateMyRestaurantRequest } from "../middleware/validate";
 import { MyRestaurantController } from "../controllers/myRestaurant-controllers";
 
 
-const router = express.Router();
+const MyRestaurantRouter = express.Router();
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -15,23 +15,23 @@ const upload = multer({
   },
 });
 
-router.get(
+MyRestaurantRouter.get(
   "/order",
   jwtCheck,
   jwtParse,
   MyRestaurantController.getMyRestaurantOrders
 );
 
-router.patch(
+MyRestaurantRouter.patch(
   "/order/:orderId/status",
   jwtCheck,
   jwtParse,
   MyRestaurantController.updateOrderStatus
 );
 
-router.get("/", jwtCheck, jwtParse, MyRestaurantController.getMyRestaurant);
+MyRestaurantRouter.get("/", jwtCheck, jwtParse, MyRestaurantController.getMyRestaurant);
 
-router.post(
+MyRestaurantRouter.post(
   "/",
   upload.single("imageFile"),
   validateMyRestaurantRequest,
@@ -40,7 +40,7 @@ router.post(
   MyRestaurantController.createMyRestaurant
 );
 
-router.put(
+MyRestaurantRouter.put(
   "/",
   upload.single("imageFile"),
   validateMyRestaurantRequest,
@@ -49,4 +49,4 @@ router.put(
   MyRestaurantController.updateMyRestaurant
 );
 
-export default router;
+export default MyRestaurantRouter;
