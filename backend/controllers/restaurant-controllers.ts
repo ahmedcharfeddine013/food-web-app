@@ -85,7 +85,7 @@ const searchRestaurant = async (req: Request, res: Response) => {
   }
 };
 
-export default {
+export const RestaurantController= {
   getRestaurant,
   searchRestaurant,
 };

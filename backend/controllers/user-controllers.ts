@@ -57,7 +57,7 @@ const updateCurrentUser = async (req: Request, res: Response) => {
   }
 };
 
-export default {
+export const MyUserController = {
   getCurrentUser,
   createCurrentUser,
   updateCurrentUser,

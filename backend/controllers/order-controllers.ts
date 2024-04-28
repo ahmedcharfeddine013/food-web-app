@@ -173,7 +173,7 @@ const createSession = async (
   return sessionData;
 };
 
-export default {
+export const OrderController = {
   getMyOrders,
   createCheckoutSession,
   stripeWebhookHandler,

@@ -127,7 +127,7 @@ const uploadImage = async (file: Express.Multer.File) => {
   return uploadResponse.url;
 };
 
-export default {
+export const MyRestaurantController= {
   updateOrderStatus,
   getMyRestaurantOrders,
   getMyRestaurant,
