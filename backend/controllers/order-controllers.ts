@@ -5,7 +5,8 @@ import Order from "../models/order";
 
 const STRIPE = new Stripe(process.env.STRIPE_API_KEY as string);
 const FRONTEND_URL = process.env.FRONTEND_URL as string;
-// const STRIPE_ENDPOINT_SECRET = process.env.STRIPE_WEBHOOK_SECRET as string;
+const STRIPE_ENDPOINT_SECRET =
+  "STRIPE_WEBHOOK_SECRET=whsec_b280320210c16ed231cf8e52870782b1c1bccbcdb675b31e02df4cc1b814f68e";
 
 const getMyOrders = async (req: Request, res: Response) => {
   try {
@@ -38,30 +39,30 @@ type CheckoutSessionRequest = {
 const stripeWebhookHandler = async (req: Request, res: Response) => {
   let event;
 
-  // try {
-  //   const sig = req.headers["stripe-signature"];
-  //   event = STRIPE.webhooks.constructEvent(
-  //     req.body,
-  //     sig as string,
-  //     // STRIPE_ENDPOINT_SECRET
-  //   );
-  // } catch (error: any) {
-  //   console.log(error);
-  //   return res.status(400).send(`Webhook error: ${error.message}`);
-  // }
+  try {
+    const sig = req.headers["stripe-signature"];
+    event = STRIPE.webhooks.constructEvent(
+      req.body,
+      sig as string,
+      STRIPE_ENDPOINT_SECRET
+    );
+  } catch (error: any) {
+    console.log(error);
+    return res.status(400).send(`Webhook error: ${error.message}`);
+  }
 
-  // if (event.type === "checkout.session.completed") {
-  //   const order = await Order.findById(event.data.object.metadata?.orderId);
+  if (event.type === "checkout.session.completed") {
+    const order = await Order.findById(event.data.object.metadata?.orderId);
 
-  //   if (!order) {
-  //     return res.status(404).json({ message: "Order not found" });
-  //   }
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
 
-  //   order.totalAmount = event.data.object.amount_total;
-  //   order.status = "paid";
+    order.totalAmount = event.data.object.amount_total;
+    order.status = "paid";
 
-  //   await order.save();
-  // }
+    await order.save();
+  }
 
   res.status(200).send();
 };
